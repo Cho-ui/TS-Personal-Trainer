@@ -1,25 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { AgGridReact } from 'ag-grid-react';
+import { ICustomer } from '../interfaces/Interfaces';
+import { Space } from 'antd';
+import AddCustomer from './AddCustomer';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
-interface ICustomer {
-    customer: {
-        firstname: string,
-        lastname: string,
-        streetaddress: string,
-        postcode: string,
-        city: string,
-        email: string,
-        phone: string,
-        content?: [],
-        links?: [{rel: string, href: string}, 
-            {rel: string, href: string}]
-    }[]
-}
+
 
 export default function Customers() {
-    const [customers, setCustomers] = useState<ICustomer["customer"]>([]);
+    const [customers, setCustomers] = useState<ICustomer["customerArray"]>([]);
 
     useEffect(() => {
         fetchCustomers();
@@ -50,6 +40,9 @@ export default function Customers() {
         <div>
             <div className="ag-theme-alpine" 
             style={{ marginTop: 10, height: 500, width: '95%'}}>
+                <Space style={{ marginBottom: 10 }}>
+                    <AddCustomer fetchCustomers={fetchCustomers} />
+                </Space>
                 <AgGridReact
                     rowData={customers}
                     columnDefs={columns}

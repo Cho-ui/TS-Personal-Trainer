@@ -1,30 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import { ICellRendererParams } from 'ag-grid-community';
+import { IActivity } from '../interfaces/Interfaces';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
-interface IActivity {
-    activity: {
-        id: number,
-        date: string,
-        duration: number,
-        activity: string,
-        customer?: {
-            id: number,
-            firstname: string,
-            lastname: string,
-            streetaddress: string,
-            postcode: string,
-            city: string,
-            email: string,
-            phone: string
-        }
-    }[]
-}
+
 
 export default function Activities() {
-    const [activities, setActivities] = useState<IActivity["activity"]>([]);
+    const [activities, setActivities] = useState<IActivity["activityArray"]>([]);
 
     const dayjs = require('dayjs');
 
