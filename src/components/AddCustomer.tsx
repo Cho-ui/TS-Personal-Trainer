@@ -3,15 +3,15 @@ import { Modal, Button } from 'antd';
 import { ICustomer } from '../interfaces/Interfaces';
 import AddCustomerFields from './AddCustomerFields';
 
-type FetchCustomers = {
+type Props = {
     fetchCustomers: () => Promise<void>
 }
 
-export default function AddCustomer(props: FetchCustomers) {
+export default function AddCustomer(props: Props) {
     const [customer, setCustomer] = useState<ICustomer["customer"]>({});
     const [visible, setVisible] = useState<boolean>(false);
 
-    const addCustomer = async (customer: ICustomer["customer"] | undefined) => {
+    const addCustomer = async (customer: ICustomer["customer"]) => {
         try {
             const settings = {
                 method: 'POST',

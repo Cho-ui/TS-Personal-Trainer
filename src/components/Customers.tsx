@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import { ICustomer } from '../interfaces/Interfaces';
 import { Space } from 'antd';
+import { ICellRendererParams } from 'ag-grid-community';
 import AddCustomer from './AddCustomer';
+import EditCustomer from './EditCustomer';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
-
 
 
 export default function Customers() {
@@ -33,7 +34,9 @@ export default function Customers() {
         {field: 'postcode', headerName: 'Post Code', sortable: true, filter: true},
         {field: 'email', headerName: 'Email', sortable: true, filter: true},
         {field: 'phone', headerName: 'Phone Number', sortable: true, filter: true},
-        {field: 'city', headerName: 'City', sortable: true, filter: true}
+        {field: 'city', headerName: 'City', sortable: true, filter: true},
+        {field: 'links.0.href', headerName: '', sortable: false, filter: false,
+        cellRendererFramework: (params: ICellRendererParams) => <EditCustomer customerParams={params} fetchCustomers={fetchCustomers} />}
     ];
 
     return (
