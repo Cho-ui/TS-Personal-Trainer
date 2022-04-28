@@ -38,5 +38,29 @@ export interface IActivity {
             email: string,
             phone: string
         }
-    }[]
+    }[],
+    activity: {
+        date?: string,
+        activity?: string,
+        duration?: number,
+        customer?: string
+    },
+    activityWithoutCustomerArray: {
+        date: string,
+        duration: number,
+        activity: string,
+        content?: [],
+        links?: [{rel: string, href: string}, 
+            {rel: string, href: string},
+            {rel: string, href: string}]
+    }[],
+    activityWithoutCustomer: {
+        date: string,
+        duration: number,
+        activity: string,
+        content?: [],
+        links?: [{rel: string, href: string}, 
+            {rel: string, href: string},
+            {rel: string, href: string}]
+    }
 };

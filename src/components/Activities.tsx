@@ -10,7 +10,9 @@ import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 export default function Activities() {
     const [activities, setActivities] = useState<IActivity["activityArray"]>([]);
 
-    const dayjs = require('dayjs');
+    // moment and moment-timezone import, default tz set to GMT
+    const moment = require('moment-timezone');
+    moment.tz.setDefault("Europe/London");
 
     useEffect(() => {
         fetchActivities();
@@ -20,14 +22,12 @@ export default function Activities() {
         try {
             const response = await fetch('https://customerrest.herokuapp.com/gettrainings');
             const data = await response.json();
-            console.log(data);
             setActivities(data);
         }
         catch(error) {
             console.error(error);
         }
     };
-
     
     const columns = [
     {field: 'customer.firstname', headerName: 'First Name', sortable: true, filter: true},
@@ -35,7 +35,7 @@ export default function Activities() {
     {field: 'activity', headerName: 'Activity', sortable: true, filter: true},
     {field: 'duration', headerName: 'Duration (minutes)', sortable: true, filter: true},
     {field: 'date', headerName: 'Date', sortable: true, filter: true,
-    cellRenderer: (params: ICellRendererParams) => dayjs(params.value).format("DD.MM.YYYY HH:mm a")}];
+    cellRenderer: (params: ICellRendererParams) => moment(params.value).format("DD.MM.YYYY HH:mm a")}];
 
     return (
         <div>
@@ -47,7 +47,7 @@ export default function Activities() {
                 pagination={true}
                 paginationPageSize={10}
                 rowSelection="single"
-                suppressCellSelection={true}
+                suppressCellFocus={true}
                 />
             </div>
         </div>
