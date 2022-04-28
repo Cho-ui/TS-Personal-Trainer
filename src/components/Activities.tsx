@@ -4,6 +4,7 @@ import { ICellRendererParams } from 'ag-grid-community';
 import { IActivity } from '../interfaces/Interfaces';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+import DeleteTraining from './DeleteTraining';
 
 
 
@@ -35,7 +36,10 @@ export default function Activities() {
     {field: 'activity', headerName: 'Activity', sortable: true, filter: true},
     {field: 'duration', headerName: 'Duration (minutes)', sortable: true, filter: true},
     {field: 'date', headerName: 'Date', sortable: true, filter: true,
-    cellRenderer: (params: ICellRendererParams) => moment(params.value).format("DD.MM.YYYY HH:mm a")}];
+    cellRenderer: (params: ICellRendererParams) => moment(params.value).format("DD.MM.YYYY HH:mm a")},
+    {field: 'id', headerName: '', sortable: false, filter: false,
+    cellRenderer: (params: ICellRendererParams) => <DeleteTraining activityid={params.value} 
+    fetchActivities={fetchActivities} />}];
 
     return (
         <div>
