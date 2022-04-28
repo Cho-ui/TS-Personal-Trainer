@@ -35,7 +35,7 @@ export default function Activities() {
     {field: 'activity', headerName: 'Activity', sortable: true, filter: true},
     {field: 'duration', headerName: 'Duration (minutes)', sortable: true, filter: true},
     {field: 'date', headerName: 'Date', sortable: true, filter: true,
-    cellRendererFramework: (params: ICellRendererParams) => dayjs(params.value).format("DD.MM.YYYY HH:mm a")}];
+    cellRenderer: (params: ICellRendererParams) => dayjs(params.value).format("DD.MM.YYYY HH:mm a")}];
 
     return (
         <div>

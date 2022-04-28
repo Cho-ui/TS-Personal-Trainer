@@ -5,6 +5,7 @@ import { Space } from 'antd';
 import { ICellRendererParams } from 'ag-grid-community';
 import AddCustomer from './AddCustomer';
 import EditCustomer from './EditCustomer';
+import DeleteCustomer from './DeleteCustomer';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
@@ -28,15 +29,17 @@ export default function Customers() {
     };
 
     const columns = [
-        {field: 'firstname', headerName: 'First Name', sortable: true, filter: true},
-        {field: 'lastname', headerName: 'Last Name', sortable: true, filter: true},
+        {field: 'firstname', headerName: 'First Name', sortable: true, filter: true, width: 120},
+        {field: 'lastname', headerName: 'Last Name', sortable: true, filter: true, width: 120},
         {field: 'streetaddress', headerName: 'Street Address', sortable: true, filter: true},
-        {field: 'postcode', headerName: 'Post Code', sortable: true, filter: true},
+        {field: 'postcode', headerName: 'Post Code', sortable: true, filter: true, width: 120},
         {field: 'email', headerName: 'Email', sortable: true, filter: true},
-        {field: 'phone', headerName: 'Phone Number', sortable: true, filter: true},
-        {field: 'city', headerName: 'City', sortable: true, filter: true},
+        {field: 'phone', headerName: 'Telephone', sortable: true, filter: true, width: 120},
+        {field: 'city', headerName: 'City', sortable: true, filter: true, width: 120},
         {field: 'links.0.href', headerName: '', sortable: false, filter: false,
-        cellRendererFramework: (params: ICellRendererParams) => <EditCustomer customerParams={params} fetchCustomers={fetchCustomers} />}
+        cellRenderer: (params: ICellRendererParams) => <EditCustomer customerParams={params} fetchCustomers={fetchCustomers} />},
+        {field: 'links.0.href', headerName: '', sortable: false, filter: false, width: 120,
+        cellRenderer: (params: ICellRendererParams) => <DeleteCustomer customerParams={params} fetchCustomers={fetchCustomers} />}
     ];
 
     return (

@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { Modal } from 'antd';
+import { Modal, message } from 'antd';
 import { ToolOutlined } from "@ant-design/icons";
 import { ICustomer } from "../interfaces/Interfaces";
 import { ICellRendererParams } from "ag-grid-community";
@@ -22,8 +22,8 @@ export default function EditCustomer(props: Props) {
                 body: JSON.stringify(updatedCustomer)
             }
             const response = await fetch(url, settings)
-            console.log(response);
             props.fetchCustomers();
+            message.success('Customer edit successful!')
         }
         catch(error) {
             console.error(error)

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Modal, Button } from 'antd';
+import { Modal, Button, message } from 'antd';
 import { ICustomer } from '../interfaces/Interfaces';
 import AddCustomerFields from './AddCustomerFields';
 
@@ -19,8 +19,8 @@ export default function AddCustomer(props: Props) {
                 body: JSON.stringify(customer)
             }
             const response = await fetch('https://customerrest.herokuapp.com/api/customers', settings)
-            console.log(response);
             props.fetchCustomers();
+            message.success('Customer added!')
         }
         catch(error) {
             console.error(error)
