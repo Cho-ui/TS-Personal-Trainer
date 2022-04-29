@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import { ICustomer } from '../interfaces/Interfaces';
 import { Space } from 'antd';
-import { ICellRendererParams } from 'ag-grid-community';
+import { AgGridEvent, GridApi, ICellRendererParams } from 'ag-grid-community';
 import AddCustomer from './AddCustomer';
 import EditCustomer from './EditCustomer';
 import DeleteCustomer from './DeleteCustomer';
 import AddActivity from './AddActivity';
+import ExportCsv from './ExportCsv';
 import { IActivity } from '../interfaces/Interfaces';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
@@ -15,6 +16,7 @@ import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 export default function Customers() {
     const [customers, setCustomers] = useState<ICustomer["customerArray"]>([]);
     const [activityTypes, setActivityTypes] = useState<string[]>([]);
+    const [gridApi, setGridApi] = useState<GridApi>();
 
 
     useEffect(() => {
@@ -47,6 +49,26 @@ export default function Customers() {
         }
     };
 
+    // sets the grid api to a state for reference in csv export
+    const onGridReady = (params: AgGridEvent) => {
+        setGridApi(params.api);
+    };
+
+    // exports the columns specified with columnkeys to a csv-file
+    const exportCsv = () => {
+        const toExport =  
+        {columnKeys: 
+            ['firstname', 
+            'lastname',
+            'streetaddress',
+            'postcode',
+            'email',
+            'phone',
+            'city'
+        ]};
+        if (gridApi) gridApi.exportDataAsCsv(toExport);
+    };
+
     const columns = [
         {field: 'firstname', headerName: 'First Name', sortable: true, filter: true, width: 120},
         {field: 'lastname', headerName: 'Last Name', sortable: true, filter: true, width: 120},
@@ -70,6 +92,7 @@ export default function Customers() {
             style={{ marginTop: 10, height: 500, width: '95%'}}>
                 <Space style={{ marginBottom: 10 }}>
                     <AddCustomer fetchCustomers={fetchCustomers} />
+                    <ExportCsv exportCsv={exportCsv} />
                 </Space>
                 <AgGridReact
                     rowData={customers}
@@ -78,6 +101,7 @@ export default function Customers() {
                     paginationPageSize={10}
                     rowSelection="single"
                     suppressCellFocus={true}
+                    onGridReady={onGridReady}
                 />
             </div>
         </div>

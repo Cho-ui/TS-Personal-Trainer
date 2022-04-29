@@ -22,6 +22,23 @@ export interface ICustomer {
     }
 };
 
+export interface ISession {
+    sessionArray: {
+        title?: string,
+        start?: string,
+        end?: string,
+        duration?: number,
+        allDay?: boolean
+    }[],
+    session: {
+        title?: string,
+        start?: string,
+        end?: string,
+        duration?: number,
+        allDay?: boolean
+    }
+};
+
 export interface IActivity {
     activityArray: {
         id: number,
@@ -44,6 +61,21 @@ export interface IActivity {
         activity?: string,
         duration?: number,
         customer?: string
+    },
+    activityWithCustomer: {
+        date?: string,
+        activity?: string,
+        duration?: number,
+        customer: {
+            id: number,
+            firstname: string,
+            lastname: string,
+            streetaddress: string,
+            postcode: string,
+            city: string,
+            email: string,
+            phone: string
+        }
     },
     activityWithoutCustomerArray: {
         date: string,
