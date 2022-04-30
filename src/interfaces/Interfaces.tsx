@@ -39,6 +39,17 @@ export interface ISession {
     }
 };
 
+export interface IStats {
+    statObjArray: {
+        activity: string,
+        performed: number
+    }[],
+    statObj: {
+        activity: string,
+        performed: number
+    }
+}
+
 export interface IActivity {
     activityArray: {
         id: number,
@@ -94,5 +105,13 @@ export interface IActivity {
         links?: [{rel: string, href: string}, 
             {rel: string, href: string},
             {rel: string, href: string}]
+    },
+    activityStatsArray: {
+        activity: string,
+        duration: number
+    }[],
+    activityStats: {
+        activity: string,
+        duration: number
     }
 };

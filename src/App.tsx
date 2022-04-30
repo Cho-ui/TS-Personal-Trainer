@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import { Layout, Menu } from 'antd';
-import { TeamOutlined, FireOutlined, ScheduleOutlined } from '@ant-design/icons';
+import { TeamOutlined, FireOutlined, ScheduleOutlined, LineChartOutlined } from '@ant-design/icons';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Customers from './components/Customers';
 import Activities from './components/Activities';
 import ActivitySchedule from './components/ActivitySchedule';
+import Statistics from './components/Statistics';
 import 'antd/dist/antd.css';
 
 
@@ -39,6 +40,11 @@ function App() {
               Schedule
               </Link>
             </Menu.Item>
+            <Menu.Item key="4" icon={<LineChartOutlined />} title={null}>
+              <Link to="/statistics">
+                Statistics
+              </Link>
+            </Menu.Item>
             </Menu>
           </Sider>
           <Layout className="site-layout">
@@ -48,6 +54,7 @@ function App() {
                 <Route path="/customers" element={<Customers />} />
                 <Route path="/activities" element={<Activities />} />
                 <Route path="/schedule" element={<ActivitySchedule />} />
+                <Route path="/statistics" element={<Statistics />} />
               </Routes>
             </Content>
           </Layout>

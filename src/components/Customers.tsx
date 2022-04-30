@@ -77,7 +77,7 @@ export default function Customers() {
         {field: 'email', headerName: 'Email', sortable: true, filter: true},
         {field: 'phone', headerName: 'Telephone', sortable: true, filter: true, width: 120},
         {field: 'city', headerName: 'City', sortable: true, filter: true, width: 120},
-        {field: 'links.0.href', headerName: '', sortable: false, filter: true, width: 50,
+        {field: 'links.0.href', headerName: '', sortable: false, filter: false, width: 50,
         cellRenderer: (params: ICellRendererParams) => <AddActivity customer={params} 
         activities={activityTypes} fetchActivityTypes={fetchActivityTypes} />},
         {field: 'links.0.href', headerName: '', sortable: false, filter: false, width: 50,
