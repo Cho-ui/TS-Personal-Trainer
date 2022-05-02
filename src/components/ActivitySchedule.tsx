@@ -10,48 +10,55 @@ import { IActivity } from "../interfaces/Interfaces";
 
 export default function ActivitySchedule() {
     const [sessions, setSessions] = useState<ISession["sessionArray"]>([{}]);
-    const [formattedS, setFormattedS] = useState<ISession["sessionArray"]>([{}]);
 
     // default tz set to GMT with
     const moment = require('moment-timezone');
     moment.tz.setDefault("Europe/London");
 
     useEffect(() => {
-        fetchSessions();
+        fetchAndFormatActivities();
     }, []);
 
-    function fetchSessions() {
-        fetch('https://customerrest.herokuapp.com/gettrainings')
-        .then(response => response.json())
-        .then(data => data.map((activity: IActivity["activityWithCustomer"])  => 
-            setSessions(sessions => [...sessions, {title: 
-            `${activity.activity} / ${activity.customer.firstname} ${activity.customer.lastname}`, 
-            start: activity.date,
-            end: '',
-            duration: activity.duration, 
-            allDay: false}])
-            ))
-        .catch(err => console.error(err))
+    const fetchAndFormatActivities = async () => {
+        try {
+            const response = await fetch('https://customerrest.herokuapp.com/gettrainings');
+            const data = await response.json();
+            let activities: ISession["session"][] = [];
+            let tidiedActivities: ISession["session"][] = [];
+        
+            activities = data.map((activity: IActivity["activityWithCustomer"]) =>
+            [...activities, {title: 
+                `${activity.activity} / ${activity.customer.firstname} ${activity.customer.lastname}`, 
+                start: activity.date,
+                end: '',
+                duration: activity.duration, 
+                allDay: false}]);
+
+            const formatActivities = () => {
+                activities.forEach(node => {
+                    let tempArray: any = node;
+                    let tempObject = tempArray[0];
+                    tidiedActivities = [...tidiedActivities, tempObject];
+                    });
+            }
+
+            const amendDates = () => {
+                tidiedActivities.forEach(session =>
+                    { if (session.end === '') {
+                    const end = moment(session.start); 
+                    end.add(session.duration, 'minutes');
+                    const endIso = moment(end).format('YYYY-MM-DD[T]HH:mm:ss.SSSZ');
+                    session.end = endIso;}
+                })};
+
+            formatActivities();
+            amendDates();
+            setSessions(tidiedActivities);
+        }
+        catch(error) {
+            console.error(error);
+        }
     };
-
-    useEffect(() => {
-        sessions.forEach(session =>
-            { if (session.end === '') {
-            const end = moment(session.start); 
-            end.add(session.duration, 'minutes');
-            const endIso = moment(end).format('YYYY-MM-DD[T]HH:mm:ss.SSSZ');
-            session.end = endIso;}
-        });
-    }, [sessions]);
-
-    /* trigger a final re-render by copying training object array to the state array
-    used by the calendar, ensuring that each end value is saved before the calendar is rendered.
-    Without this, the final object in the training array will get its end-value, but
-    the calendar will render without it. 
-    */
-    useEffect(() => {
-        setFormattedS(sessions);
-    }, [sessions]);
 
     /* On clicking an event, the user gets an alert with the event info.
     Could be replaced with a tooltip or similar if developed further */
@@ -72,7 +79,7 @@ export default function ActivitySchedule() {
                 center: 'title',
                 right: 'dayGridMonth,timeGridWeek,dayGridDay',
               }}
-            events={formattedS}
+            events={sessions}
             eventClick={eventInfo}
             timeZone='Europe/London'
             height={600}

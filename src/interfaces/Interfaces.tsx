@@ -56,7 +56,7 @@ export interface IActivity {
         date: string,
         duration: number,
         activity: string,
-        customer?: {
+        customer: {
             id: number,
             firstname: string,
             lastname: string,

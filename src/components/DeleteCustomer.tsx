@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { DeleteFilled, PropertySafetyTwoTone } from "@ant-design/icons";
+import { DeleteFilled } from "@ant-design/icons";
 import { Popconfirm, message } from "antd";
 import { ICellRendererParams } from 'ag-grid-community';
 
