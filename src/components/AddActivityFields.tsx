@@ -10,7 +10,7 @@ type Props = {
     setNewActivity: React.Dispatch<React.SetStateAction<IActivity["activity"]>>
 }
 
-export default function AddTrainingFields(props: Props) {
+export default function AddActivityFields(props: Props) {
     const [isNew, setIsNew] = useState<boolean>(false);
     const [ddValue, setDDValue] = useState<string | undefined>();
     const [date, setDate] = useState<string>('');

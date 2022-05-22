@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { Modal, message } from "antd";
 import { PlusOutlined } from "@ant-design/icons"
-import AddTrainingFields from './AddTrainingFields';
+import AddActivityFields from './AddActivityFields';
 import { IActivity } from '../interfaces/Interfaces';
 import { ICellRendererParams } from 'ag-grid-community';
 
@@ -72,7 +72,7 @@ export default function AddActivity(props: Props) {
             onOk={handleSave}
             okText="Save"
             onCancel={handleCancel}>
-            <AddTrainingFields activities={props.activities} newActivity={newActivity} 
+            <AddActivityFields activities={props.activities} newActivity={newActivity} 
             setNewActivity={setNewActivity} />
         </Modal>
 

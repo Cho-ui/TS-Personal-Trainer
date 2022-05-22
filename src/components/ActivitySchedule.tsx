@@ -22,28 +22,18 @@ export default function ActivitySchedule() {
     const fetchAndFormatActivities = async () => {
         try {
             const response = await fetch('https://customerrest.herokuapp.com/gettrainings');
-            const data = await response.json();
-            let activities: ISession["session"][] = [];
-            let tidiedActivities: ISession["session"][] = [];
-        
-            activities = data.map((activity: IActivity["activityWithCustomer"]) =>
-            [...activities, {title: 
-                `${activity.activity} / ${activity.customer.firstname} ${activity.customer.lastname}`, 
-                start: activity.date,
-                end: '',
-                duration: activity.duration, 
-                allDay: false}]);
-
-            const formatActivities = () => {
-                activities.forEach(node => {
-                    let tempArray: any = node;
-                    let tempObject = tempArray[0];
-                    tidiedActivities = [...tidiedActivities, tempObject];
-                    });
-            }
+            const data = await response.json();    
+    
+            let activities: ISession["session"][] = 
+            data.map((activity: IActivity["activityWithCustomer"]) => 
+            ({title: `${activity.activity} / ${activity.customer.firstname} ${activity.customer.lastname}`, 
+            start: activity.date,
+            end: '',
+            duration: activity.duration, 
+            allDay: false}));
 
             const amendDates = () => {
-                tidiedActivities.forEach(session =>
+                activities.forEach(session =>
                     { if (session.end === '') {
                     const end = moment(session.start); 
                     end.add(session.duration, 'minutes');
@@ -51,9 +41,8 @@ export default function ActivitySchedule() {
                     session.end = endIso;}
                 })};
 
-            formatActivities();
             amendDates();
-            setSessions(tidiedActivities);
+            setSessions(activities);
         }
         catch(error) {
             console.error(error);
