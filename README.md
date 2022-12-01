@@ -5,6 +5,8 @@ along with a more detailed(for now) readme.md can be found here:
 
 https://github.com/Cho-ui/Personal-Trainer-React-Front
 
+The API the app is based on is a resource used on multiple courses, and thus might cause issues with how the app is behaving based on the information other course participants have saved to the DB. In case of errors in functionality, send an empty POST request to https://customerrest.herokuapp.com/reset. This resets the DB to contain the default mock data designed to be used in the assignment.
+
 The project will be used as a learning tool in implementing various technologies to a web application,
 including styling, logic and end-to-end testing, git workflows, docker etc.
 
